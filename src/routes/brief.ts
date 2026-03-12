@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import type { Env, AppVariables } from "../lib/types";
 import { getLatestBrief, getBriefByDate, listBriefDates, recordEarning } from "../lib/do-client";
-import { BRIEFS_FREE, BRIEF_PRICE_SATS, CORRESPONDENT_SHARE } from "../lib/constants";
+import { BRIEF_PRICE_SATS, CORRESPONDENT_SHARE } from "../lib/constants";
 import { buildPaymentRequired, verifyPayment } from "../services/x402";
 
 const briefRouter = new Hono<{ Bindings: Env; Variables: AppVariables }>();
@@ -74,7 +74,8 @@ briefRouter.get("/api/brief/:date", async (c) => {
   }
 
   // x402 paywall for past briefs (when not free)
-  if (!BRIEFS_FREE) {
+  const briefsFree = c.env.BRIEFS_FREE !== "false";
+  if (!briefsFree) {
     const paymentHeader =
       c.req.header("X-PAYMENT") ?? c.req.header("payment-signature");
 

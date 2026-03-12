@@ -50,4 +50,3 @@ export const BEAT_EXPIRY_DAYS = 14;
 // ── Brief paywall ──
 export const BRIEF_PRICE_SATS = 1000;
 export const CORRESPONDENT_SHARE = 0.7;
-export const BRIEFS_FREE = true;

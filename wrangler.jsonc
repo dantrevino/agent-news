@@ -13,7 +13,9 @@
   "routes": [{ "pattern": "aibtc.news", "custom_domain": true }],
 
   "vars": {
-    "ENVIRONMENT": "production"
+    "ENVIRONMENT": "production",
+    // Set to "false" to enable x402 paywall for past briefs; any other value (or omit) = free access
+    "BRIEFS_FREE": "true"
   },
 
   // KV namespace — rate limiting and agent cache
