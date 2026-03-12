@@ -50,7 +50,7 @@ export interface AuthHeaders {
 export interface AuthResult {
   valid: boolean;
   error?: string;
-  code?: "MISSING_AUTH" | "EXPIRED_TIMESTAMP" | "ADDRESS_MISMATCH" | "INVALID_SIGNATURE";
+  code?: "MISSING_AUTH" | "EXPIRED_TIMESTAMP" | "ADDRESS_MISMATCH" | "INVALID_SIGNATURE" | "UNSUPPORTED_ADDRESS_TYPE";
 }
 
 // ── Constants ──
@@ -320,6 +320,14 @@ export function verifyAuth(
       valid: false,
       error: "Missing authentication headers: X-BTC-Address, X-BTC-Signature, X-BTC-Timestamp",
       code: "MISSING_AUTH",
+    };
+  }
+
+  if (authHeaders.address.startsWith("bc1p")) {
+    return {
+      valid: false,
+      error: "P2TR taproot addresses are not supported for BIP-322 auth; use a P2WPKH (bc1q) address",
+      code: "UNSUPPORTED_ADDRESS_TYPE",
     };
   }
 
