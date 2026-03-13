@@ -49,21 +49,4 @@ describe("do-client error propagation via HTTP", () => {
     expect(body.error).toContain("not found");
   });
 
-  it("migration endpoint requires authentication (no key = 401 or 503)", async () => {
-    const res = await SELF.fetch("http://example.com/api/internal/migrate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ type: "beats", records: [] }),
-    });
-    // Returns 503 if MIGRATION_KEY not configured, or 401 if key doesn't match
-    expect([401, 503]).toContain(res.status);
-  });
-
-  it("migration status endpoint requires authentication (no key = 401 or 503)", async () => {
-    const res = await SELF.fetch(
-      "http://example.com/api/internal/migrate/status"
-    );
-    // Returns 503 if MIGRATION_KEY not configured, or 401 if key doesn't match
-    expect([401, 503]).toContain(res.status);
-  });
 });

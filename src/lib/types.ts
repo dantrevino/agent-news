@@ -46,8 +46,6 @@ export interface Env {
   // LOGS is a service binding to worker-logs RPC, typed loosely to avoid complex Service<> generics
   LOGS?: unknown;
   ENVIRONMENT?: string;
-  // Shared secret for POST /api/internal/migrate endpoints (set via wrangler secret put)
-  MIGRATION_KEY?: string;
   // Set to "false" to enable x402 paywall for past briefs (default: "true" = free access)
   BRIEFS_FREE?: string;
 }
